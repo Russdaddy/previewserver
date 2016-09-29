@@ -1,0 +1,255 @@
+body { margin:0px 0px; padding:0px; } 
+
+* { box-sizing: Border-box } 
+
+#container{
+	background-color:white;
+	position:absolute;
+	overflow:hidden;
+	border: 1px solid black;
+} 
+
+.sprite {
+	position:absolute;
+	background-repeat:no-repeat;
+}
+
+#bg {
+	left:0px;
+	top:0px;
+	width:300px;
+	height:600px;
+	background-image:url(../img/bg.jpg);
+}
+
+#cheese {
+	left:71px;
+	top:240px;
+	width:145px;
+	height:134px;
+	background-image:url(../img/cheese.png);
+}
+
+#hand {
+	left:127px;
+	top:0px;
+	width:112px;
+	height:116px;
+	background-image:url(../img/hand.png);
+}
+
+#rotel {
+	left:117px;
+	top:252px;
+	width:86px;
+	height:85px;
+	background-image:url(../img/rotel.png);
+}
+
+#hand_top {
+	left:140px;
+	top:130px;
+	width:160px;
+	height:189px;
+	background-image:url(../img/hand_top.png);
+}
+
+#hand_bottom {
+	left:135px;
+	top:250px;
+	width:79px;
+	height:74px;
+	background-image:url(../img/hand_bottom.png);
+}
+
+#velveeta {
+	left:0px;
+	top:65px;
+	width:133px;
+	height:147px;
+	background-image:url(../img/velveeta.png);
+}
+
+#melted_cheese {
+	left:60px;
+	top:215px;
+	width:190px;
+	height:190px;
+	background-image:url(../img/melted_cheese.png);
+}
+
+#champagne_pour_slices {
+	left:132px;
+	top:42px;
+	width:18px;
+	height:14px;
+	background-image:url(../img/champagne_pour_slices.png);
+}
+
+#plateNapkin {
+	left:0px;
+	top:404px;
+	width:64px;
+	height:136px;
+	background-image:url(../img/plateNapkin.png);
+}
+
+#soda {
+	left:0px;
+	top:94px;
+	width:108px;
+	height:135px;
+	background-image:url(../img/soda.png);
+}
+
+#chipsBasket {
+	left:246px;
+	top:0px;
+	width:54px;
+	height:200px;
+	background-image:url(../img/chipsBasket.png);
+}
+
+#cup {
+	left:265px;
+	top:57px;
+	width:35px;
+	height:80px;
+	background-image:url(../img/cup.png);
+}
+
+#redCup {
+	left:51px;
+	top:202px;
+	width:82px;
+	height:48px;
+	background-image:url(../img/redCup.png);
+}
+
+#cup2 {
+	left:227px;
+	top:433px;
+	width:73px;
+	height:114px;
+	background-image:url(../img/cup2.png);
+}
+
+#hand1 {
+	left:0px;
+	top:47px;
+	width:83px;
+	height:128px;
+	background-image:url(../img/hand1.png);
+}
+
+#hand2 {
+	left:92px;
+	top:75px;
+	width:88px;
+	height:85px;
+	background-image:url(../img/hand2.png);
+}
+
+#hand3 {
+	left:113px;
+	top:227px;
+	width:97px;
+	height:70px;
+	background-image:url(../img/hand3.png);
+}
+
+#hand4 {
+	left:135px;
+	top:347px;
+	width:154px;
+	height:253px;
+	background-image:url(../img/hand4.png);
+}
+
+#hand5 {
+	left:0px;
+	top:256px;
+	width:66px;
+	height:60px;
+	background-image:url(../img/hand5.png);
+}
+
+#bg2 {
+	left:0px;
+	top:0px;
+	width:300px;
+	height:600px;
+	background-image:url(../img/bg2.jpg);
+}
+
+#ef_1 {
+	left:7px;
+	top:41px;
+	width:284px;
+	height:29px;
+	background-image:url(../img/ef_1.png);
+}
+
+#queso_lockup {
+	left:94px;
+	top:28px;
+	width:118px;
+	height:60px;
+	background-image:url(../img/queso_lockup.png);
+}
+
+#ef_velveeta {
+	left:51px;
+	top:356px;
+	width:142px;
+	height:69px;
+	background-image:url(../img/ef_velveeta.png);
+}
+
+#ef_rotel {
+	left:177px;
+	top:323px;
+	width:65px;
+	height:110px;
+	background-image:url(../img/ef_rotel.png);
+}
+
+#ef_queso {
+	left:87px;
+	top:377px;
+	width:139px;
+	height:119px;
+	background-image:url(../img/ef_queso.png);
+}
+
+#cta {
+	left:65px;
+	top:506px;
+	width:185px;
+	height:29px;
+	background-image:url(../img/cta.png);
+}
+
+#logos {
+	left:76px;
+	top:552px;
+	width:145px;
+	height:45px;
+	background-image:url(../img/logos.png);
+}
+
+#Party_Of_Parties_Banner_300x600 {
+	left:92px;
+	top:241px;
+	width:115px;
+	height:105px;
+	background-image:url(../img/Party_Of_Parties_Banner_300x600.png);
+}
+
+#chip {
+	left:153px;
+	top:377px;
+	width:47px;
+	height:48px;
+	background-image:url(../img/chip.png);
+}

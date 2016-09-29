@@ -1,0 +1,95 @@
+body { margin:0px 0px; padding:0px; } 
+
+* { box-sizing: Border-box } 
+
+#container{
+	background-color:white;
+	position:absolute;
+	overflow:hidden;
+	border: 1px solid black;
+} 
+
+.sprite {
+	position:absolute;
+	background-repeat:no-repeat;
+}
+
+#bg {
+	left:0px;
+	top:0px;
+	width:300px;
+	height:250px;
+	background-image:url(../img/bg.jpg);
+}
+
+#copy1 {
+	left:38px;
+	top:17px;
+	width:111px;
+	height:54px;
+	background-image:url(../img/copy1.png);
+}
+
+#copy2 {
+	left:34px;
+	top:86px;
+	width:232px;
+	height:85px;
+	background-image:url(../img/copy2.png);
+}
+
+#copy3 {
+	left:13px;
+	top:63px;
+	width:277px;
+	height:139px;
+	background-image:url(../img/copy3.png);
+}
+
+#copy4 {
+	left:18px;
+	top:63px;
+	width:266px;
+	height:128px;
+	background-image:url(../img/copy4.png);
+}
+
+#logo {
+	left:41px;
+	top:16px;
+	width:225px;
+	height:154px;
+	background-image:url(../img/logo.png);
+}
+
+#mohegan {
+	left:0px;
+	top:133px;
+	width:164px;
+	height:117px;
+	background-image:url(../img/mohegan.png);
+}
+
+#date {
+	left:172px;
+	top:195px;
+	width:112px;
+	height:14px;
+	background-image:url(../img/date.png);
+}
+
+#cta {
+	left:179px;
+	top:215px;
+	width:98px;
+	height:24px;
+	background-image:url(../img/cta.png);
+}
+
+#epicConcerts {
+	left:38px;
+	top:17px;
+	width:111px;
+	height:54px;
+	background-image:url(../img/epicConcerts.png);
+}

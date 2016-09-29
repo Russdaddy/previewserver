@@ -1,0 +1,20 @@
+{
+  "name": "previewserver",
+  "version": "1.0.0",
+  "description": "bbdo preview server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "underscore": "^1.8.3",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
