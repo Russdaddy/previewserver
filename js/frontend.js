@@ -8,4 +8,5 @@ function showBanner(id){
 		banners[i].style.display = "none"
 	}
 	document.getElementById(id).style.display = "block";
+	document.getElementById(id).contentWindow.location.reload();
 }
