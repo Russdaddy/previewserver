@@ -2,8 +2,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{{ json.Client }}</title>
-	<script src="/js/frontend.js"></script>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script src="/dist/js/frontend.js"></script>
+	<link rel="stylesheet" type="text/css" href="/dist/css/style.css">
 </head>
 	<div class="banner-header">
 		<h1>{{ json.Client }}</h1>
@@ -14,15 +14,14 @@
 		<ul>
 			{{#each json.banners}}
 				<li>
-					<a class="btn" onClick="showBanner('{{@key}}')">{{@key}}</a>
+					<a class="btn" href="./?view={{this}}">{{this}}</a>
 				</li>
 			{{/each}}
 		</ul>
 	</div>
-	
 	<div class="banner-container">
-		{{#each json.banners}}
-			<iframe class="banner" style="display:none" id={{@key}} height={{this.height}} width={{this.width}} src={{this.path}}></iframe>
-		{{/each}}
+		<h1 class="select-message">{{json.message}}</h1>
+		<iframe class="banner" id={{json.view}} height={{json.h}} width={{json.w}} src={{json.path}}></iframe>
+
 	</div>
 </html>

@@ -3,12 +3,12 @@ var app = express();
 var hbs = require('express-handlebars');
 var fs = require('fs');
 var _ = require('underscore');
-
+//static path for banners
 var staticPath = 'clients';
 
 //serve frontend js
-app.use('/js',express.static('js'));
-app.use('/css',express.static('css'));
+app.use('/dist/js',express.static('dist/js'));
+app.use('/dist/css',express.static('dist/css'));
 //serve banners
 app.use('/clients',express.static(staticPath));
 
@@ -32,25 +32,29 @@ app.get('/clients/**',function(req,res){
 			res.render('notfound',{
 				page:req.path
 			})
-		} else{
+		} else {
 			//template object
 			var obj = JSON.parse(data);
 			//read directory to get sizes
 			fs.readdir(__dirname + req.path,(err,data)=>{
 				data = _.without(data,'.DS_Store','template.json')
-				obj.banners = {};
-				//foreach banner size get w / h
-				data.forEach((e,index)=>{
-					obj.banners[e] = {
-						width:e.split('x')[0],
-						height:e.split('x')[1],
-						// path:req.path.replace('/' + staticPath,'') + e
-						path:req.path + e
-					}
-				})
+				obj.banners = data;
+				if(req.query.view){
+					obj.view = req.query.view || data[0];
+					obj.w = req.query.view.split('x')[0] 
+					obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
+					obj.path = req.path + req.query.view;
+				}
+				else{
+					obj.view = data[0];
+					obj.w = data[0].split('x')[0];
+					obj.h = data[0].split('x')[1];
+					obj.path = req.path + data[0];
+				} 
+
 				//render banner view
 				res.render('banner',{
-					json:obj
+					json:obj,
 				})
 			})
 		}
