@@ -3,18 +3,26 @@
 	<meta charset="UTF-8">
 	<title>{{ json.Client }}</title>
 	<script src="/js/frontend.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
-	<h1>{{ json.Client }}</h1>
-	<h2>{{ json.Campaign }}</h1>
-	<ul>
+	<div class="banner-header">
+		<h1>{{ json.Client }}</h1>
+		<h2>{{ json.Campaign }}</h1>
+	</div>
+	
+	<div class="banner-nav">
+		<ul>
+			{{#each json.banners}}
+				<li>
+					<a class="btn" onClick="showBanner('{{@key}}')">{{@key}}</a>
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+	
+	<div class="banner-container">
 		{{#each json.banners}}
-			<li>
-				<a onClick="showBanner('{{@key}}')">{{@key}}</a>
-			</li>
+			<iframe class="banner" style="display:none" id={{@key}} height={{this.height}} width={{this.width}} src={{this.path}}></iframe>
 		{{/each}}
-
-		{{#each json.banners}}
-			<iframe class="banner" style="position:absolute;display:none" id={{@key}} height={{this.height}} width={{this.width}} src={{this.path}}></iframe>
-		{{/each}}
-	</ul>
+	</div>
 </html>

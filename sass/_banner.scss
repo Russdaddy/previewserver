@@ -1,0 +1,48 @@
+$font-stack:arial,sans-serif;
+
+body{
+	padding:10;
+}
+
+.banner-nav{
+	float:left;
+	width:20%;
+	padding-top:10px;
+	ul{
+		width:10px;
+		margin:0;
+		list-style-type:none;
+		padding-right:20px;
+		li{
+			float:left;
+			padding-bottom:25px;
+			text-decoration:underline;
+			&:hover{
+				cursor:pointer;
+				color:#888;
+			}
+		}
+	}
+}
+
+.banner-container{
+	float:left;
+	width:80%;
+	height:80%;
+	background-color: #eee;
+	background-image: linear-gradient(45deg, rgba(200,200,200,1) 25%, transparent 25%, transparent 75%, rgba(200,200,200,1) 75%, rgba(200,200,200,1)), 
+	linear-gradient(45deg, rgba(200,200,200,1) 25%, transparent 25%, transparent 75%, rgba(200,200,200,1) 75%, rgba(200,200,200,1));
+	background-size:12px 12px;
+	background-position:0 0, 6px 6px;
+
+	iframe{
+		border:none;
+		display:block;
+		margin:0 auto;
+	}
+}
+
+.banner-header{
+	height:20%;
+	font-family:$font-stack;
+}

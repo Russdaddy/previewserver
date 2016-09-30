@@ -1,5 +1,5 @@
 window.onload = function(){
-	document.getElementsByClassName("banner")[0].style.display = "block"
+	document.getElementsByClassName("banner")[0].style.display = "block";
 }
 
 function showBanner(id){
@@ -7,5 +7,5 @@ function showBanner(id){
 	for(var i=0;i<banners.length;i++){
 		banners[i].style.display = "none"
 	}
-	document.getElementById(id).style.display = "block"
+	document.getElementById(id).style.display = "block";
 }

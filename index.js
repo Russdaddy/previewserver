@@ -1,5 +1,4 @@
 var express = require('express');
-var readDirectory = require('./modules/ReadDirectory')
 var app = express();
 var hbs = require('express-handlebars');
 var fs = require('fs');
@@ -9,6 +8,7 @@ var staticPath = 'clients';
 
 //serve frontend js
 app.use('/js',express.static('js'));
+app.use('/css',express.static('css'));
 //serve banners
 app.use('/clients',express.static(staticPath));
 
@@ -27,7 +27,11 @@ app.set('view engine','hbs')
 app.get('/clients/**',function(req,res){
 	fs.readFile(__dirname + req.path + 'template.json','utf8',(err,data) =>{
 		if(err){
-			res.send('err')
+			console.log(err)
+			res.status(404)
+			res.render('notfound',{
+				page:req.path
+			})
 		} else{
 			//template object
 			var obj = JSON.parse(data);
@@ -44,8 +48,7 @@ app.get('/clients/**',function(req,res){
 						path:req.path + e
 					}
 				})
-				console.log(obj);
-				//render view
+				//render banner view
 				res.render('banner',{
 					json:obj
 				})
