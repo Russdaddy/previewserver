@@ -1,65 +1,119 @@
 var express = require('express');
 var app = express();
-var hbs = require('express-handlebars');
+var ejs = require('ejs');
 var fs = require('fs');
 var _ = require('underscore');
-//static path for banners
-var staticPath = 'clients';
+var send = require('send');
+var appendQuery = require('append-query');
 
-//serve frontend js
+var PORT = process.env.PORT || 3000;
+
+//serve banners as static files
+app.use('/',express.static(__dirname + '/digital'));
+// app.use('/2017',express.static(__dirname + '/2017'));
+
+//serve frontend static files
 app.use('/dist/js',express.static('dist/js'));
 app.use('/dist/css',express.static('dist/css'));
+app.use('/dist/img',express.static('dist/img'));
 //serve banners
-app.use('/clients',express.static(staticPath));
 
 //set views dir
 app.set('views',__dirname + '/views')
 
 //add and configure handlebars
-app.engine('hbs',hbs({
-	extname:'hbs',
-	layoutsDir:__dirname + '/views'
-}));
+app.set('view engine','ejs');
 //set view engine to handlebars
-app.set('view engine','hbs')
+app.set('view engine','hbs');
 
-//on clients folder get
-app.get('/clients/**',function(req,res){
-	fs.readFile(__dirname + req.path + 'template.json','utf8',(err,data) =>{
-		if(err){
-			console.log(err)
-			res.status(404)
-			res.render('notfound',{
-				page:req.path
-			})
-		} else {
-			//template object
-			var obj = JSON.parse(data);
-			//read directory to get sizes
-			fs.readdir(__dirname + req.path,(err,data)=>{
-				data = _.without(data,'.DS_Store','template.json')
-				obj.banners = data;
-				if(req.query.view){
-					obj.view = req.query.view || data[0];
-					obj.w = req.query.view.split('x')[0] 
-					obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
-					obj.path = req.path + req.query.view;
-				}
-				else{
-					obj.view = data[0];
-					obj.w = data[0].split('x')[0];
-					obj.h = data[0].split('x')[1];
-					obj.path = req.path + data[0];
-				} 
+app.get('/:client/:year/:campaign',function(req,res){
+	//build view data from params
+	var obj = {};
+	obj.client = req.params.client;
+	obj.year = req.params.year;
+	obj.campaign = req.params.campaign;
+	var conceptslist = [];
 
-				//render banner view
-				res.render('banner',{
-					json:obj,
-				})
-			})
-		}
+	dirs = fs.readdirSync(__dirname + '/digital' + req.path)
+	dirs = _.without(dirs,'.DS_Store','template.json')
+	dirs = _.map(dirs,function(dir){
+		return dir.toUpperCase();
+	})
+
+	if(fs.statSync(__dirname + '/digital' + req.path + dirs[0]).isDirectory()){
+		fs.readdir(__dirname + '/digital' + req.path + dirs[0],function(err,data){
+			data = data.filter(item => !(/(^|\/)\.[^\/\.]/g).test(item));
+			obj.banners = data;
+			//to lower array
+			obj.conceptView = false;
+			obj.conceptlist = dirs;
+			//if view param
+			if(req.query.view){
+				obj.view = req.query.view || data[0];
+				obj.w = req.query.view.split('x')[0] 
+				obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
+				obj.path = req.path + dirs[0] + '/' + req.query.view;
+			}
+			else{
+				obj.view = data[0];
+				obj.w = data[0].split('x')[0];
+				obj.h = data[0].split('x')[1];
+				obj.path = req.path + dirs[0] + '/' + data[0];
+				console.log(obj.path)
+			}	
+		})
+	}
+	
+
+	res.render('banner',{
+		json:obj,
 	})
 })
 
+function toProperCase(){	
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
 
-app.listen(3000)
+//CONCEPT SPECIFIC ENDPOINT
+app.get('/:client/:year/:campaign/:concept',function(req,res){
+	//build view data from params
+	var obj = {};
+	// obj.year = req.params.year;
+	obj.client = req.params.client;
+	obj.campaign = req.params.campaign;
+	obj.concept = req.params.concept;
+
+	fs.readdir(__dirname + '/digital' + req.path + '../',function(err,data){
+		var dirs = _.without(data,'.DS_Store','template.json');
+		fs.readdir(__dirname + '/digital' + req.path,function(err,data){
+			data = _.without(data,'.DS_Store','template.json')
+			obj.banners = data;
+			dirs = _.map(dirs,function(dir){
+				return dir.toUpperCase();
+			})
+			obj.conceptlist = dirs;
+			obj.conceptView = true;
+			if(req.query.view){
+				obj.view = req.query.view || data[0];
+				obj.w = req.query.view.split('x')[0] 
+				obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
+				obj.path = req.path + req.query.view;
+			}
+			else{
+				obj.view = data[0];
+				obj.w = data[0].split('x')[0];
+				obj.h = data[0].split('x')[1];
+				obj.path = req.path + data[0];
+			}
+		});
+	})
+	
+
+	res.render('banner',{
+		json:obj,
+	})
+})
+
+app.listen(PORT,function(){
+	console.log('listening on port: ' + PORT)
+})
