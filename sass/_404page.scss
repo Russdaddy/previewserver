@@ -2,10 +2,12 @@ $font-color:white;
 $font-stack:arial,sans-serif;
 
 .err-body{
-	background-color:lightblue;
 	.err-copy{
 		h1{
-			color:#D2691E;
+			color:#ef4024;
+		}
+		h2{
+			color:#ef4024
 		}
 		font-family:$font-stack;
 		color:white;

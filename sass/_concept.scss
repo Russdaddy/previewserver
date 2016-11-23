@@ -1,0 +1,36 @@
+$font-stack:arial,sans-serif;
+.concept-list{
+	background-color:#8b8b8b;
+	// padding:20;
+	color:white;
+	font-family:$font-stack;
+	display:table;
+	width:100%;
+	ul{
+		list-style-type: none;
+    	display: table-cell;
+    	visibility: 0;
+    	vertical-align: middle;
+    	padding: 0;
+		li{
+			float:left;
+			padding:15;
+		}
+	}
+	a{
+		color:white;
+		text-decoration:none;
+		margin:0 auto;
+	}
+}
+
+.concept-item{
+	padding:20;
+}
+
+.concept-item-active{
+	background-color:white;
+	a{
+		color:#8b8b8b;
+	}
+}

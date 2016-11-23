@@ -1,0 +1,51 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title><%= object.Client %></title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script src="/dist/js/frontend.js"></script>
+	<link rel="stylesheet" type="text/css" href="/dist/css/style.css">
+</head>
+	<div class="banner-header">
+		<div style="display:table-cell;vertical-align:middle;padding-left: 15;">
+			<div class="left">
+				<img src="/dist/img/BBDO_logo_white.svg"/>
+			</div>
+			<div class="right">
+				<h1><%= object.client %></h1><br>
+				<h2><%= object.campaign %></h2>
+			</div>
+		</div>
+	</div>
+	<div class="concept-list">
+		<ul>
+			<% for (var i=0;i<object.conceptlist.length;i++){%>
+				<% if (object.currentConcept == object.conceptlist[i]){ %>
+					<li class="concept-item-active"><a href="../<%=object.conceptlist[i]%>"> <%= object.conceptlist[i] %></a></li>		
+				<% } else {%>
+					<li class="concept-item"><a href="../<%=object.conceptlist[i]%>"> <%= object.conceptlist[i] %></a></li>	
+				<% } %>	
+			<%}%>
+		</ul>
+	</div>
+	
+	<div class="banner-section-wrapper">
+		<div class="banner-nav">
+			<ul>
+			  <% for (var i=0;i<object.banners.length;i++) { %>
+			    <li class="<%=object.banners[i]%>">
+			    	<% if(object.currentView == object.banners[i]){%>
+			    		<a class="btn active rendered" href="./?view=<%= object.banners[i] %>"><%= object.banners[i] %></a>
+			    	<%} else {%>
+			    		<a class="btn" href="./?view=<%= object.banners[i] %>"><%= object.banners[i] %></a>
+			    	<% } %>
+			    </li>
+			  <% } %>
+			</ul>
+		</div>
+
+		<div class="banner-container">
+			<iframe class="banner" id=<%= object.view %> height=<%=object.h%> width=<%=object.w%> src=<%=object.path%>></iframe>
+		</div>
+	</div>
+</html>

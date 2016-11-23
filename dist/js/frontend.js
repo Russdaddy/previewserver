@@ -1,10 +1,11 @@
 window.onload = function(){
 	$('.btn').on('mouseenter',function(){
 		$(this).toggleClass('active');
-	})
+	});
+
 	$('.btn').on('mouseleave',function(){
 		$(this).toggleClass('active');
-	})
+	});
 }
 
 // function showBanner(id){

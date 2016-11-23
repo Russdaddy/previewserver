@@ -1,0 +1,122 @@
+body { margin:0px 0px; padding:0px; } 
+
+* { box-sizing: Border-box } 
+
+#container{
+	background-color:white;
+	position:absolute;
+	overflow:hidden;
+	/*border: 1px solid black;*/
+} 
+
+.sprite {
+	position:absolute;
+	background-repeat:no-repeat;
+}
+
+#blank {
+	left:2px;
+	top:2px;
+	width:297px;
+	height:246px;
+	background-image:url(../img/blank.png);
+}
+
+#c1 {
+	left:6px;
+	top:6px;
+	width:289px;
+	height:239px;
+	background-image:url(../img/c1.png);
+}
+
+#c2 {
+	left:6px;
+	top:6px;
+	width:289px;
+	height:239px;
+	background-image:url(../img/c2.png);
+}
+
+#c3 {
+	left:6px;
+	top:6px;
+	width:289px;
+	height:239px;
+	background-image:url(../img/c3.png);
+}
+
+#cta_copy {
+	left:10px;
+	top:7px;
+	width:98px;
+	height:16px;
+	background-image:url(../img/cta_copy.png);
+}
+
+#cta_fpo {
+	left:20px;
+	top:170px;
+	width:115px;
+	height:30px;
+	background-image:url(../img/gradient.png);
+	overflow: hidden;
+	background-position: :"-400px -100px";
+}
+#hold_cta_fpo {
+	left:18px;
+	top:165px;
+	width:105px;
+	height:28px;
+	background-image:url(../img/gradient.png);
+	overflow: hidden;
+	background-position: :"-400px -100px";
+}
+
+#gradient {
+	left:0px;
+	top:0px;
+	width:752px;
+	height:500px;
+	background-image:url(../img/gradient.png);
+}
+
+#logos {
+	left:22px;
+	top:212px;
+	width:261px;
+	height:22px;
+	background-image:url(../img/logos.png);
+}
+
+#black {
+	left:14px;
+	top:14px;
+	width:874px;
+	height:874px;
+	background-image:url(../img/black.png);
+}
+
+#block {
+	left:0px;
+	top:0px;
+	width:300px;
+	height:250px;
+	background-image:url(../img/block.png);
+}
+
+#c1a {
+	left:22px;
+	top:144px;
+	width:156px;
+	height:11px;
+	background-image:url(../img/c1a.png);
+}
+
+#c2a {
+	left:19px;
+	top:107px;
+	width:262px;
+	height:58px;
+	background-image:url(../img/c2a.png);
+}
