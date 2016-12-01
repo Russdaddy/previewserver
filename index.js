@@ -24,12 +24,6 @@ app.set('views',__dirname + '/views')
 //set view engine to ejs
 app.set('view engine','ejs');
 
-app.get('/',function(req,res){
-	res.render('notfound',{
-		object:{}
-	})
-})
-
 app.get('/:client/:year/:campaign',function(req,res){
 	//build view data from params
 	var obj = {};
@@ -39,36 +33,51 @@ app.get('/:client/:year/:campaign',function(req,res){
 	var conceptslist = [];
 
 	// console.log('CAMPAIGN VIEW')
+	try{
+		dirs = fs.readdirSync(__dirname + '/digital' + req.path)
+		dirs = _.without(dirs,'.DS_Store','template.json')
 
-	dirs = fs.readdirSync(__dirname + '/digital' + req.path)
-	dirs = _.without(dirs,'.DS_Store','template.json')
+		fs.readdir(__dirname + '/digital' + req.path + dirs[0],function(err,data){
+			if(err){
+				res.render('notfound',{
+					object:{
+						reqpath:req.path
+					}
+				})
+			} else {
+				data = data.filter(item => !(/(^|\/)\.[^\/\.]/g).test(item));
+				obj.banners = data;
+				//to lower array
+				obj.conceptView = false;
+				obj.conceptlist = dirs;
+				//if view param
+				if(req.query.view){
+					obj.view = req.query.view || data[0];
+					obj.w = req.query.view.split('x')[0] 
+					obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
+					obj.path = req.path + dirs[0] + '/' + req.query.view;
+				}
+				else{
+					obj.view = data[0];
+					obj.w = data[0].split('x')[0];
+					obj.h = data[0].split('x')[1];
+					obj.path = req.path + dirs[0] + '/' + data[0];
+				}
+				res.render('campaign',{
+					object:obj,
+				})
+			}
+		})
+	} catch(err){
+		res.render('notfound',{
+			object:{
+				reqpath:req.path
+			}
+		})
+	}
 	// dirs = _.map(dirs,function(dir){
 	// 	return dir.toUpperCase();
 	// })
-
-	fs.readdir(__dirname + '/digital' + req.path + dirs[0],function(err,data){
-		data = data.filter(item => !(/(^|\/)\.[^\/\.]/g).test(item));
-		obj.banners = data;
-		//to lower array
-		obj.conceptView = false;
-		obj.conceptlist = dirs;
-		//if view param
-		if(req.query.view){
-			obj.view = req.query.view || data[0];
-			obj.w = req.query.view.split('x')[0] 
-			obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
-			obj.path = req.path + dirs[0] + '/' + req.query.view;
-		}
-		else{
-			obj.view = data[0];
-			obj.w = data[0].split('x')[0];
-			obj.h = data[0].split('x')[1];
-			obj.path = req.path + dirs[0] + '/' + data[0];
-		}
-		res.render('campaign',{
-			object:obj,
-		})
-	})
 })
 
 function toProperCase(){	
@@ -86,38 +95,54 @@ app.get('/:client/:year/:campaign/:concept',function(req,res){
 	obj.currentConcept = req.params.concept;
 
 	// console.log('CONCEPT VIEW')
-
-	fs.readdir(__dirname + '/digital' + req.path + '../',function(err,data){
-		if(err){
-			res.render('notfound',{
-				object:obj
-			})
-		} else{
-			var dirs = _.without(data,'.DS_Store','template.json');
-			obj.conceptlist = dirs;
-			fs.readdir(__dirname + '/digital' + req.path,function(err,data){
-				data = _.without(data,'.DS_Store','template.json');
-				obj.banners = data;
-				// obj.conceptlist = _.map(obj.conceptlist,function(concept){
-				// 	return concept.toUpperCase();
-				// })
-				if(req.query.view){
-					obj.view = req.query.view || data[0];
-					obj.w = req.query.view.split('x')[0] 
-					obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
-					obj.path = req.path + req.query.view;
-					obj.currentView = req.query.view;
-				}
-				else{
-					obj.view = data[0];
-					obj.w = data[0].split('x')[0];
-					obj.h = data[0].split('x')[1];
-					obj.path = req.path + data[0];
-				}
-				res.render('concept',{
+	try{
+		fs.readdir(__dirname + '/digital' + req.path + '../',function(err,data){
+			if(err){
+				res.render('notfound',{
 					object:obj
 				})
-			});
+			} else{
+				var dirs = _.without(data,'.DS_Store','template.json');
+				obj.conceptlist = dirs;
+				fs.readdir(__dirname + '/digital' + req.path,function(err,data){
+					data = _.without(data,'.DS_Store','template.json');
+					obj.banners = data;
+					// obj.conceptlist = _.map(obj.conceptlist,function(concept){
+					// 	return concept.toUpperCase();
+					// })
+					if(req.query.view){
+						obj.view = req.query.view || data[0];
+						obj.w = req.query.view.split('x')[0] 
+						obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
+						obj.path = req.path + req.query.view;
+						obj.currentView = req.query.view;
+					}
+					else{
+						obj.view = data[0];
+						obj.w = data[0].split('x')[0];
+						obj.h = data[0].split('x')[1];
+						obj.path = req.path + data[0];
+					}
+					res.render('concept',{
+						object:obj
+					})
+				});
+			}
+		})
+	} catch(err){
+		res.render('notfound',{
+			object:{
+				reqpath:req.path
+			}
+		})
+	}
+
+})
+
+app.get('*',function(req,res){
+	res.render('notfound',{
+		object:{
+			reqpath:req.path
 		}
 	})
 })
