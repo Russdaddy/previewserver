@@ -31,8 +31,6 @@ app.get('/:client/:year/:campaign',function(req,res){
 	obj.year = req.params.year;
 	obj.campaign = req.params.campaign;
 	var conceptslist = [];
-
-	// console.log('CAMPAIGN VIEW')
 	//BANNERS
 	try{
 		dirs = fs.readdirSync(__dirname + '/digital' + req.path)
@@ -86,7 +84,6 @@ app.get('/:client/:year/:campaign',function(req,res){
 				})
 			}
 		})
-
 	} catch(err){
 		res.render('notfound',{
 			object:{
@@ -94,9 +91,6 @@ app.get('/:client/:year/:campaign',function(req,res){
 			}
 		})
 	}
-	// dirs = _.map(dirs,function(dir){
-	// 	return dir.toUpperCase();
-	// })
 })
 
 function toProperCase(){	
@@ -118,7 +112,9 @@ app.get('/:client/:year/:campaign/:concept',function(req,res){
 		fs.readdir(__dirname + '/digital' + req.path + '../',function(err,data){
 			if(err){
 				res.render('notfound',{
-					object:obj
+					object:{
+						reqpath:req.path
+					}
 				})
 			} else{
 				var dirs = _.without(data,'.DS_Store','template.json');
@@ -168,7 +164,6 @@ app.get('/:client/:year/:campaign/:concept',function(req,res){
 			}
 		})
 	}
-
 })
 
 app.get('*',function(req,res){
