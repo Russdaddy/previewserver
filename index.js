@@ -33,6 +33,7 @@ app.get('/:client/:year/:campaign',function(req,res){
 	var conceptslist = [];
 
 	// console.log('CAMPAIGN VIEW')
+	//BANNERS
 	try{
 		dirs = fs.readdirSync(__dirname + '/digital' + req.path)
 		dirs = _.without(dirs,'.DS_Store','template.json')
@@ -56,8 +57,9 @@ app.get('/:client/:year/:campaign',function(req,res){
 					obj.w = req.query.view.split('x')[0] 
 					obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
 					obj.path = req.path + dirs[0] + '/' + req.query.view;
+					obj.currentView = req.query.view;
 				}
-				else{
+				else if(data.length > 0){
 					obj.view = data[0];
 					obj.w = data[0].split('x')[0];
 					obj.h = data[0].split('x')[1];
@@ -68,6 +70,7 @@ app.get('/:client/:year/:campaign',function(req,res){
 				})
 			}
 		})
+
 	} catch(err){
 		res.render('notfound',{
 			object:{
@@ -107,20 +110,33 @@ app.get('/:client/:year/:campaign/:concept',function(req,res){
 				fs.readdir(__dirname + '/digital' + req.path,function(err,data){
 					data = _.without(data,'.DS_Store','template.json');
 					obj.banners = data;
-					// obj.conceptlist = _.map(obj.conceptlist,function(concept){
-					// 	return concept.toUpperCase();
-					// })
+					var statics = _.every(data,function(banner){
+						return (banner.indexOf('.jpg') || banner.indexOf('.png'))
+					})
+					if (statics){
+						//remove extensions
+						obj.banners = _.map(obj.banners,function(banner){
+							return banner.split('.')[0];
+						})
+					}
 					if(req.query.view){
 						obj.view = req.query.view || data[0];
-						obj.w = req.query.view.split('x')[0] 
-						obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
-						obj.path = req.path + req.query.view;
+						obj.w = req.query.view.split('x')[0]; 
+						obj.h = req.query.view.split('x')[1];
+						if(statics){
+							var sizeWithExtension = _.find(data,function(banner){
+								return banner.split('.')[0] === (req.query.view)
+							})
+							obj.path = req.path + sizeWithExtension;
+						} else {
+							obj.path = req.path + req.query.view;	
+						}
 						obj.currentView = req.query.view;
 					}
-					else{
+					else if(data.length > 0){
 						obj.view = data[0];
-						obj.w = data[0].split('x')[0];
-						obj.h = data[0].split('x')[1];
+						obj.w = data[0].split('x')[0].split('.')[0];
+						obj.h = data[0].split('x')[1].split('.')[0];
 						obj.path = req.path + data[0];
 					}
 					res.render('concept',{

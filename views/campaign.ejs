@@ -31,7 +31,7 @@
 			  <% for (var i=0;i<object.banners.length;i++) { %>
 			    <li class="<%=object.banners[i]%>">
 			    	<% if(object.currentView == object.banners[i]){%>
-			    		<a class="btn active" href="./?view=<%= object.banners[i] %>"><%= object.banners[i] %></a>
+			    		<a class="btn active rendered" href="./?view=<%= object.banners[i] %>"><%= object.banners[i] %></a>
 			    	<%} else {%>
 			    		<a class="btn" href="./?view=<%= object.banners[i] %>"><%= object.banners[i] %></a>
 			    	<% } %>

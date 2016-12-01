@@ -1,4 +1,4 @@
-window.onload = function(){
+$(document).ready(function(){
 	$('.btn').on('mouseenter',function(){
 		$(this).toggleClass('active');
 	});
@@ -6,7 +6,7 @@ window.onload = function(){
 	$('.btn').on('mouseleave',function(){
 		$(this).toggleClass('active');
 	});
-}
+})
 
 // function showBanner(id){
 // 	var banners = document.getElementsByClassName("banner");
