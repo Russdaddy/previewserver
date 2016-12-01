@@ -48,6 +48,15 @@ app.get('/:client/:year/:campaign',function(req,res){
 			} else {
 				data = data.filter(item => !(/(^|\/)\.[^\/\.]/g).test(item));
 				obj.banners = data;
+				var statics = _.every(data,function(banner){
+					return (banner.indexOf('.jpg') || banner.indexOf('.png'))
+				})
+				if (statics){
+					//remove extensions
+					obj.banners = _.map(obj.banners,function(banner){
+						return banner.split('.')[0];
+					})
+				}
 				//to lower array
 				obj.conceptView = false;
 				obj.conceptlist = dirs;
@@ -56,13 +65,20 @@ app.get('/:client/:year/:campaign',function(req,res){
 					obj.view = req.query.view || data[0];
 					obj.w = req.query.view.split('x')[0] 
 					obj.h = req.query.view.split('x')[1] || data[0].split('x')[1];
-					obj.path = req.path + dirs[0] + '/' + req.query.view;
+					if(statics){
+						var sizeWithExtension = _.find(data,function(banner){
+							return banner.split('.')[0] === (req.query.view)
+						})
+						obj.path = req.path + dirs[0] + '/' + sizeWithExtension;
+					} else {
+						obj.path = req.path + dirs[0] + '/' + req.query.view;
+					}
 					obj.currentView = req.query.view;
 				}
 				else if(data.length > 0){
 					obj.view = data[0];
-					obj.w = data[0].split('x')[0];
-					obj.h = data[0].split('x')[1];
+					obj.w = data[0].split('x')[0].split('.')[0];
+					obj.h = data[0].split('x')[1].split('.')[0];
 					obj.path = req.path + dirs[0] + '/' + data[0];
 				}
 				res.render('campaign',{
