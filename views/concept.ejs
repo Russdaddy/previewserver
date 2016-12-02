@@ -46,6 +46,9 @@
 
 		<div class="banner-container">
 			<iframe class="banner" id=<%= object.view %> height=<%=object.h%> width=<%=object.w%> src=<%=object.path%>></iframe>
+			<% if(object.dateModified) {%>
+				<p><%= object.dateModified %></p>
+			<% } %>
 		</div>
 	</div>
 </html>

@@ -20,7 +20,11 @@
 	<div class="concept-list">
 		<ul>
 			<% for (var i=0;i<object.conceptlist.length;i++){%>
-				<li class="concept-item"><a href="./<%=object.conceptlist[i]%>"> <%= object.conceptlist[i] %></a></li>	
+				<% if (object.currentConcept == object.conceptlist[i]){ %>
+					<li class="concept-item-active"><a href="./<%=object.conceptlist[i]%>"> <%= object.conceptlist[i] %></a></li>		
+				<% } else {%>
+					<li class="concept-item"><a href="./<%=object.conceptlist[i]%>"> <%= object.conceptlist[i] %></a></li>	
+				<% } %>	
 			<%}%>
 		</ul>
 	</div>
@@ -42,6 +46,9 @@
 
 		<div class="banner-container">
 			<iframe class="banner" id=<%= object.view %> height=<%=object.h%> width=<%=object.w%> src=<%=object.path%>></iframe>
+			<% if(object.dateModified) {%>
+				<p><%= object.dateModified %></p>
+			<% } %>
 		</div>
 	</div>
 </html>

@@ -24,6 +24,7 @@ app.set('views',__dirname + '/views')
 //set view engine to ejs
 app.set('view engine','ejs');
 
+//CAMPAIGN ENDPOINT (defaults to rendering first item in the folder)
 app.get('/:client/:year/:campaign',function(req,res){
 	//build view data from params
 	var obj = {};
@@ -50,7 +51,6 @@ app.get('/:client/:year/:campaign',function(req,res){
 					return (banner.indexOf('.jpg') || banner.indexOf('.png'))
 				})
 				if (statics){
-					//remove extensions
 					obj.banners = _.map(obj.banners,function(banner){
 						return banner.split('.')[0];
 					})
@@ -58,6 +58,8 @@ app.get('/:client/:year/:campaign',function(req,res){
 				//to lower array
 				obj.conceptView = false;
 				obj.conceptlist = dirs;
+				obj.currentConcept = dirs[0];
+				obj.currentView = data[0];
 				//if view param
 				if(req.query.view){
 					obj.view = req.query.view || data[0];
@@ -74,6 +76,9 @@ app.get('/:client/:year/:campaign',function(req,res){
 					obj.currentView = req.query.view;
 				}
 				else if(data.length > 0){
+					var stats = fs.statSync(__dirname + '/digital' + req.path + dirs[0] + '/' + data[0])
+					obj.dateModified = stats.mtime.toString();
+
 					obj.view = data[0];
 					obj.w = data[0].split('x')[0].split('.')[0];
 					obj.h = data[0].split('x')[1].split('.')[0];
@@ -116,7 +121,7 @@ app.get('/:client/:year/:campaign/:concept',function(req,res){
 						reqpath:req.path
 					}
 				})
-			} else{
+			} else {
 				var dirs = _.without(data,'.DS_Store','template.json');
 				obj.conceptlist = dirs;
 				fs.readdir(__dirname + '/digital' + req.path,function(err,data){
@@ -133,24 +138,35 @@ app.get('/:client/:year/:campaign/:concept',function(req,res){
 					}
 					if(req.query.view){
 						obj.view = req.query.view || data[0];
+						// var dateModified = fs.readFileSync()
+						// console.log(__dirname + '/digital' + req.path + req.query.view)						
 						obj.w = req.query.view.split('x')[0]; 
 						obj.h = req.query.view.split('x')[1];
+
 						if(statics){
 							var sizeWithExtension = _.find(data,function(banner){
 								return banner.split('.')[0] === (req.query.view)
 							})
 							obj.path = req.path + sizeWithExtension;
+							var stats = fs.statSync(__dirname + '/digital' + req.path + sizeWithExtension)
+							obj.dateModified = stats.mtime.toString();
 						} else {
+							var stats = fs.statSync(__dirname + '/digital' + req.path + req.query.view)
+							obj.dateModified = stats.mtime.toString();		
 							obj.path = req.path + req.query.view;	
 						}
 						obj.currentView = req.query.view;
 					}
 					else if(data.length > 0){
+						var stats = fs.statSync(__dirname + '/digital' + req.path + data[0])
+						obj.dateModified = stats.mtime.toString();
 						obj.view = data[0];
 						obj.w = data[0].split('x')[0].split('.')[0];
 						obj.h = data[0].split('x')[1].split('.')[0];
 						obj.path = req.path + data[0];
+						obj.currentView = data[0].split('.')[0];
 					}
+					
 					res.render('concept',{
 						object:obj
 					})
