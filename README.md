@@ -1,1 +1,1 @@
-# Banner Preview server test
+# Banner Preview server
